@@ -18,9 +18,7 @@ Außerdem wird eine Leistungskurve aus einer `csv`-Datei erstellt und geplottet.
 
 In [`activity.csv`] (activity.csv) liegen die Daten.
 
-### Beispiel
 
-![](https://jhumci.github.io/2024_SoSe_Programmieruebung/images/power_curve.png)
+## Power-Curve Grafik:
 
-
-
+![](https://raw.githubusercontent.com/hannahneininger/progue_2025/refs/heads/master/figures/power_curve.png)
