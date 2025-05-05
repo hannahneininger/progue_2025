@@ -16,8 +16,23 @@ Außerdem wird eine Leistungskurve aus einer `csv`-Datei erstellt und geplottet.
 
 ## Nutzung des Projektes
 
-In [`activity.csv`] (activity.csv) liegen die Daten.
+Die Datei [`activity.csv`](activity.csv) enthält Leistungsdaten (z. B. Watt über Zeit).
 
+Diese werden durch das Skript `power_curve.py` eingelesen, verarbeitet und als Power-Curve geplottet.
+
+
+1. Repository klonen:
+   ```bash
+   git clone <REPO-URL>
+   cd <Projektordner>
+
+2. PDM-Projekt initialisieren (falls nicht vorhanden):
+
+    pdm init
+
+3. Abhängigkeiten installieren:
+
+    pdm install
 
 ## Power-Curve Grafik:
 
