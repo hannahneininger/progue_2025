@@ -1,7 +1,7 @@
 # %% z
 import pandas as pd
 
-dataframe = pd.read_csv("../data/activity.csv")
+dataframe = pd.read_csv("data/activity.csv")
 dataframe
 # %% [markdown]
 
@@ -145,9 +145,9 @@ print(dfresult)
 
 
 # %%
-
+import pandas as pd
 def create_table():
-    dataframe = pd.read_csv("../data/activity.csv")
+    dataframe = pd.read_csv("data/activity.csv")
 
     # Berechnung der Zonen
     dataframe["Zone"] = None
@@ -163,25 +163,25 @@ def create_table():
 
         list_zone = []  # Liste für die Zonen anlegen
 
-        dataframe["Zone"] = None # fügt neue Spalte in das datefraem von "activity.csv" ein 
+    dataframe["Zone"] = None # fügt neue Spalte in das datefraem von "activity.csv" ein 
 
-        for index, row in dataframe.iterrows():
-            current_hr = row["HeartRate"]
-            
-            if current_hr >= untergrenzen_zonen["Zone 5"]:
-                list_zone.append("Zone 5")
-            elif current_hr >= untergrenzen_zonen["Zone 4"]:
-                list_zone.append("Zone 4")
-            elif current_hr >= untergrenzen_zonen["Zone 3"]: 
-                list_zone.append("Zone 3")
-            elif current_hr >= untergrenzen_zonen["Zone 2"]:
-                list_zone.append("Zone 2")
-            elif current_hr >= untergrenzen_zonen["Zone 1"]:
-                list_zone.append("Zone 1")
-            else:
-                list_zone.append("Zone 0")
+    for index, row in dataframe.iterrows():
+        current_hr = row["HeartRate"]
+        
+        if current_hr >= untergrenzen_zonen["Zone 5"]:
+            list_zone.append("Zone 5")
+        elif current_hr >= untergrenzen_zonen["Zone 4"]:
+            list_zone.append("Zone 4")
+        elif current_hr >= untergrenzen_zonen["Zone 3"]: 
+            list_zone.append("Zone 3")
+        elif current_hr >= untergrenzen_zonen["Zone 2"]:
+            list_zone.append("Zone 2")
+        elif current_hr >= untergrenzen_zonen["Zone 1"]:
+            list_zone.append("Zone 1")
+        else:
+            list_zone.append("Zone 0")
 
-        dataframe["Zone"] = list_zone
+    dataframe["Zone"] = list_zone
 
 
     dataframe.groupby("Zone").mean()
@@ -199,6 +199,9 @@ def create_table():
 
     # entferne die Spalte "Zone"
     dfresult = dfresult.reset_index(drop=True)
+    return dfresult
+
+dfresult = create_table()  # Aufruf der Funktion create_table
 
 
 print(dfresult)
