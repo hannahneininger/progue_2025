@@ -18,7 +18,20 @@ Außerdem wird eine Leistungskurve aus einer `csv`-Datei erstellt und geplottet.
 
 In [`activity.csv`] (activity.csv) liegen die Daten.
 
+## Funktionale Anforderungen
+
+##
+
+.\.venv\Scripts\activate
+python -m streamlit run .\main.py
+
+
+## Use case Diagramm
+
+![](docs/usecase.svg)
+
 
 ## Power-Curve Grafik:
 
 ![](https://raw.githubusercontent.com/hannahneininger/progue_2025/refs/heads/master/figures/power_curve.png)
+
