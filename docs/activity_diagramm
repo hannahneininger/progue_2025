@@ -1,0 +1,17 @@
+---
+title: Analyse EKG
+---
+flowchart TB
+    start( )
+    start -->select_user[Probandin auswählen]
+    select_user --> load_user[Probandin anzeigen]
+    load_user --> has_test{EKG-Daten vorhanden?}
+    has_test-- ja --->select_ekg[Test auswählen]
+    has_test-- nein --->no_ekg[Fehler anzeigen]
+    select_ekg -->create_grap[Grafik erstellen]
+    no_ekg --> select_user
+    create_grap -->show_grap[Grafik anzeigen]
+    select_ekg -->compute_hr[Durchschnittspuls ausrechnen]
+    compute_hr -->show_hr[Durchschnittspuls anzeigen]
+    show_hr --> ende( )
+    show_grap --> ende( )
