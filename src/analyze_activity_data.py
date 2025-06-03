@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-dataframe = pd.read_csv("../data/activity.csv")
+dataframe = pd.read_csv("data/activity.csv")
 dataframe
 # %% [markdown]
 
@@ -166,7 +166,7 @@ print(dfresult)
 # %%
 import pandas as pd
 def create_table():
-    dataframe = pd.read_csv("../data/activity.csv")
+    dataframe = pd.read_csv("data/activity.csv")
 
     # Berechnung der Zonen
     dataframe["Zone"] = None
@@ -232,13 +232,14 @@ print(dfresult)
 heartrate = dataframe["HeartRate"]
 power = dataframe["PowerOriginal"]
 
+
 fig, ax1 = plt.subplots()
 
 # Erste Y-Achse: Herzfrequenz
 color = 'tab:red'
-ax1.set_xlabel('Zeit (Index)')
-ax1.set_ylabel('Herzfrequenz', color=color)
-ax1.plot(heartrate.index, heartrate, color=color, label='Herzfrequenz')
+ax1.set_xlabel('Zeit (min)')
+ax1.set_ylabel('Herzfrequenz (bpm)', color=color)
+ax1.plot(heartrate.index/60, heartrate, color=color, label='Herzfrequenz')
 ax1.tick_params(axis='y', labelcolor=color)
 
 # Zonen farblich markieren (basierend auf zone_ranges_df)
@@ -251,13 +252,34 @@ for i, (_, row) in enumerate(zone_ranges_df.iterrows()):
 # Zweite Y-Achse: Power
 ax2 = ax1.twinx()
 color = 'tab:blue'
-ax2.set_ylabel('Leistung (Power)', color=color)
-ax2.plot(power.index, power, color=color, label='Power')
+ax2.set_ylabel('Leistung (Watt)', color=color)
+ax2.plot(power.index/60, power, color=color, label='Power')
 ax2.tick_params(axis='y', labelcolor=color)
 
+
+
+
 fig.tight_layout()
-plt.title('Herzfrequez & Power')
+plt.title('Herzfrequenz & Leistung')
+
 plt.show()
+
+fig.savefig("figures/heart_rate_power_curve.png")  # Speichern des Plots als PNG-Datei
+
+
+
+
+
+# %%
+
+#power_mean = dataframe["PowerOriginal"].mean()
+#power_max = dataframe["PowerOriginal"].max()
+
+# Tabelle mit Mittelwert und Maximalwert der Leistung pro Zone
+def power_stats_per_zone():
+    return dataframe.groupby("Zone")["PowerOriginal"].agg(Mittelwert="mean", Maximalwert="max")
+print(power_stats_per_zone)
+
 
 
 # %%

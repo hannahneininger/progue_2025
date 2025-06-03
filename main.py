@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from src.analyze_activity_data import create_table
-
+from src.analyze_activity_data import power_stats_per_zone
 from src.read_data import get_person_names, get_person_image_by_name
 
 
@@ -30,6 +30,15 @@ st.image(get_person_image_by_name(st.session_state.selected_person), caption=st.
 #print(create_table())
 
 st.dataframe(create_table())
+
+
+# heart_rate_power_curve
+st.write("# Herzfrequenz-Leistungs-Kurve")
+st.image("figures/heart_rate_power_curve.png", caption="Herzfrequenz-Leistungs-Kurve")
+# Anzeigen der Tabelle mit Mittelwert und Maximalwert der Leistung pro Zone
+st.write("# Leistung pro Zone")
+st.dataframe(power_stats_per_zone())
+
 
 
 
