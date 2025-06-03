@@ -229,42 +229,60 @@ print(dfresult)
 
 
 # %%
+import plotly.graph_objs as go
+
 heartrate = dataframe["HeartRate"]
 power = dataframe["PowerOriginal"]
 
+fig = go.Figure()
 
-fig, ax1 = plt.subplots()
+# Herzfrequenz-Linie
+fig.add_trace(go.Scatter(
+    x=heartrate.index/60,
+    y=heartrate,
+    name='Herzfrequenz',
+    yaxis='y1',
+    line=dict(color='red')
+))
 
-# Erste Y-Achse: Herzfrequenz
-color = 'tab:red'
-ax1.set_xlabel('Zeit (min)')
-ax1.set_ylabel('Herzfrequenz (bpm)', color=color)
-ax1.plot(heartrate.index/60, heartrate, color=color, label='Herzfrequenz')
-ax1.tick_params(axis='y', labelcolor=color)
+# Power-Linie
+fig.add_trace(go.Scatter(
+    x=power.index/60,
+    y=power,
+    name='Leistung',
+    yaxis='y2',
+    line=dict(color='green')
+))
 
-# Zonen farblich markieren (basierend auf zone_ranges_df)
-zone_colors = ['#ffcccc', '#ff9999', '#ff6666', '#ff3333', '#cc0000']  # Verschiedene Rottöne für die Zonen
+# Zonen farblich markieren (als Shapes)
+# Einfache Rotabstufungen für die Herzfrequenz-Zonen
+zone_colors = ['#ffcccc', '#ff9999', '#ff6666', '#ff3333', '#cc0000']
 
 for i, (_, row) in enumerate(zone_ranges_df.iterrows()):
-    color = zone_colors[i % len(zone_colors)]
-    ax1.axhspan(row['min'], row['max'], color=color, alpha=0.2, label=row['Zone'])
+    fig.add_shape(
+        type="rect",
+        xref="paper", yref="y1",
+        x0=0, x1=1,
+        y0=row['min'], y1=row['max'],
+        fillcolor=zone_colors[i % len(zone_colors)],
+        opacity=0.15,
+        layer="below",
+        line_width=0,
+    )
 
-# Zweite Y-Achse: Power
-ax2 = ax1.twinx()
-color = 'tab:blue'
-ax2.set_ylabel('Leistung (Watt)', color=color)
-ax2.plot(power.index/60, power, color=color, label='Power')
-ax2.tick_params(axis='y', labelcolor=color)
+# Layout mit zwei Y-Achsen und Zoom/Interaktivität
+fig.update_layout(
+    title="Herzfrequenz & Leistung",
+    xaxis=dict(title="Zeit (min)"),
+    yaxis=dict(title="Herzfrequenz (bpm)", color='red'),
+    yaxis2=dict(title="Leistung (Watt)", overlaying='y', side='right', color='green'),
+    legend=dict(x=0.01, y=0.99),
+    hovermode='x unified',
+)
 
-
-
-
-fig.tight_layout()
-plt.title('Herzfrequenz & Leistung')
-
-plt.show()
-
-fig.savefig("figures/heart_rate_power_curve.png")  # Speichern des Plots als PNG-Datei
+# Interaktive Zoomfunktion ist standardmäßig in Plotly enthalten (per Drag & Zoom)
+fig.write_html("figures/heart_rate_power_curve_interactive.html")
+fig.show()
 
 
 
