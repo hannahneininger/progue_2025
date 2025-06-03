@@ -1,7 +1,9 @@
 # %% z
 import pandas as pd
+import matplotlib.pyplot as plt
+import plotly.express as px
 
-dataframe = pd.read_csv("data/activity.csv")
+dataframe = pd.read_csv("../data/activity.csv")
 dataframe
 # %% [markdown]
 
@@ -85,6 +87,23 @@ for index, row in dataframe.iterrows():
 dataframe["Zone"] = list_zone
 print(dataframe["Zone"].value_counts()) # summe, wie viel sekunden in der jeweilgen zone verbracht wurden
 
+# %%
+# Erstelle eine Tabelle mit Zone, Minimum und Maximum der Herzfrequenz für jede Zone
+zone_ranges = []
+for i in range(1, 6):
+    zone_name = f"Zone {i}"
+    min = untergrenzen_zonen[zone_name]
+    if i < 5:
+        max_hr = untergrenzen_zonen[f"Zone {i+1}"] - 1
+    else:
+        max_hr = hr_max
+    zone_ranges.append({"Zone": zone_name, "min": min, "max": max_hr})
+
+
+zone_ranges_df = pd.DataFrame(zone_ranges)
+zone_ranges_df
+print(zone_ranges_df)
+
 
 
 # %%
@@ -147,7 +166,7 @@ print(dfresult)
 # %%
 import pandas as pd
 def create_table():
-    dataframe = pd.read_csv("data/activity.csv")
+    dataframe = pd.read_csv("../data/activity.csv")
 
     # Berechnung der Zonen
     dataframe["Zone"] = None
@@ -207,6 +226,35 @@ dfresult = create_table()  # Aufruf der Funktion create_table
 print(dfresult)
 
 
+
+
+# %%
+heartrate = dataframe["HeartRate"]
+power = dataframe["PowerOriginal"]
+
+fig, ax1 = plt.subplots()
+
+# Erste Y-Achse: Herzfrequenz
+color = 'tab:red'
+ax1.set_xlabel('Zeit (Index)')
+ax1.set_ylabel('Herzfrequenz', color=color)
+ax1.plot(heartrate.index, heartrate, color=color, label='Herzfrequenz')
+ax1.tick_params(axis='y', labelcolor=color)
+
+# Zonen farblich markieren (basierend auf zone_ranges_df)
+for _, row in zone_ranges_df.iterrows():
+    ax1.axhspan(row['min'], row['max'], color=row.get('color', 'gray'), alpha=0.2, label=row.get('zone', None))
+
+# Zweite Y-Achse: Power
+ax2 = ax1.twinx()
+color = 'tab:blue'
+ax2.set_ylabel('Leistung (Power)', color=color)
+ax2.plot(power.index, power, color=color, label='Power')
+ax2.tick_params(axis='y', labelcolor=color)
+
+fig.tight_layout()
+plt.title('Herzfrequez & Power')
+plt.show()
 
 
 # %%
