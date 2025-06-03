@@ -242,8 +242,11 @@ ax1.plot(heartrate.index, heartrate, color=color, label='Herzfrequenz')
 ax1.tick_params(axis='y', labelcolor=color)
 
 # Zonen farblich markieren (basierend auf zone_ranges_df)
-for _, row in zone_ranges_df.iterrows():
-    ax1.axhspan(row['min'], row['max'], color=row.get('color', 'gray'), alpha=0.2, label=row.get('zone', None))
+zone_colors = ['#ffcccc', '#ff9999', '#ff6666', '#ff3333', '#cc0000']  # Verschiedene Rottöne für die Zonen
+
+for i, (_, row) in enumerate(zone_ranges_df.iterrows()):
+    color = zone_colors[i % len(zone_colors)]
+    ax1.axhspan(row['min'], row['max'], color=color, alpha=0.2, label=row['Zone'])
 
 # Zweite Y-Achse: Power
 ax2 = ax1.twinx()
