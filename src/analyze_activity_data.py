@@ -92,7 +92,40 @@ import numpy as np
 
 # ...existing code...
 
-def dataplot():
+def dataplot(hr_max):
+    untergrenzen_zonen = {}
+    zone = 1
+
+    for faktor in range(50, 100, 10):
+        untergrenzen_zonen[f"Zone {zone}"] = float(hr_max * faktor / 100)
+        zone = zone + 1
+    
+    list_zone = []
+    dataframe["Zone"] = None
+
+    for index, row in dataframe.iterrows():
+        
+        current_hr = row["HeartRate"]
+
+        if current_hr >= untergrenzen_zonen["Zone 5"]:
+            list_zone.append("Zone 5")
+
+        elif current_hr >= untergrenzen_zonen["Zone 4"]:
+            list_zone.append("Zone 4")
+
+        elif current_hr >= untergrenzen_zonen["Zone 3"]:
+            list_zone.append("Zone 3")
+        
+        elif current_hr >= untergrenzen_zonen["Zone 2"]:
+            list_zone.append("Zone 2")  
+        elif current_hr >= untergrenzen_zonen["Zone 1"]:
+            list_zone.append("Zone 1") 
+
+        else:
+            list_zone.append("Zone 0") 
+
+    dataframe["Zone"] = list_zone
+    
     time= np.arange(0, len(dataframe) )/ 60
     fig = px.line(dataframe, y=["HeartRate", "PowerOriginal"], 
                   x= time,

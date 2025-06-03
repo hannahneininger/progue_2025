@@ -21,10 +21,14 @@ image = Image.open(get_person_image_by_name(st.session_state.select_person))
 
 # Anzeigen eines Bilds mit Caption
 st.image(image, caption=st.session_state.select_person)
+
+default_hr_max = int(dataframe["HeartRate"].max())
+hr_max = st.number_input("Maximale Herzfrequenz eingeben", min_value=100, max_value=250, value=default_hr_max, step=1)
+
    
 
 #Anzeigen analysed data
-st.plotly_chart(dataplot()) 
+st.plotly_chart(dataplot(hr_max)) 
 
 # Anzeigen wie lang in einzelen Zonen
    
@@ -40,4 +44,3 @@ zone_stats = zone_minutes.to_frame().join(zone_power.rename("Ø Power (W)"))
 
 st.dataframe(zone_stats)
 
-   
