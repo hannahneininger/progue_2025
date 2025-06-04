@@ -57,3 +57,11 @@ Diese werden durch das Skript `power_curve.py` eingelesen, verarbeitet und als P
 ## Anwendung der App
 1. Sicherstellen dass virtuelle Umgebung aktiviert ist `.venv/Scripts/activate´
 2. Abhängigikeiten installieren `streamlit run main.py´
+
+
+## Beispielbilder der App
+
+![](figures\Screenshot_2025-06-04_55027.png)
+![](figures\Screenshot_2025-06-04_155103.png)
+![](figures\Screenshot_2025-06-04_155126.png)
+
