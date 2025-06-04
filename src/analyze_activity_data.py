@@ -1,5 +1,7 @@
 # %% z
 import pandas as pd
+import matplotlib.pyplot as plt
+import plotly.express as px
 
 dataframe = pd.read_csv("data/activity.csv")
 dataframe
@@ -84,6 +86,23 @@ for index, row in dataframe.iterrows():
 
 dataframe["Zone"] = list_zone
 print(dataframe["Zone"].value_counts()) # summe, wie viel sekunden in der jeweilgen zone verbracht wurden
+
+# %%
+# Erstelle eine Tabelle mit Zone, Minimum und Maximum der Herzfrequenz für jede Zone
+zone_ranges = []
+for i in range(1, 6):
+    zone_name = f"Zone {i}"
+    min = untergrenzen_zonen[zone_name]
+    if i < 5:
+        max_hr = untergrenzen_zonen[f"Zone {i+1}"] - 1
+    else:
+        max_hr = hr_max
+    zone_ranges.append({"Zone": zone_name, "min": min, "max": max_hr})
+
+
+zone_ranges_df = pd.DataFrame(zone_ranges)
+zone_ranges_df
+print(zone_ranges_df)
 
 
 
@@ -206,6 +225,78 @@ dfresult = create_table()  # Aufruf der Funktion create_table
 
 print(dfresult)
 
+
+
+
+# %%
+import plotly.graph_objs as go
+
+heartrate = dataframe["HeartRate"]
+power = dataframe["PowerOriginal"]
+
+fig = go.Figure()
+
+# Herzfrequenz-Linie
+fig.add_trace(go.Scatter(
+    x=heartrate.index/60,
+    y=heartrate,
+    name='Herzfrequenz',
+    yaxis='y1',
+    line=dict(color='red')
+))
+
+# Power-Linie
+fig.add_trace(go.Scatter(
+    x=power.index/60,
+    y=power,
+    name='Leistung',
+    yaxis='y2',
+    line=dict(color='green')
+))
+
+# Zonen farblich markieren (als Shapes)
+# Einfache Rotabstufungen für die Herzfrequenz-Zonen
+zone_colors = ['#ffcccc', '#ff9999', '#ff6666', '#ff3333', '#cc0000']
+
+for i, (_, row) in enumerate(zone_ranges_df.iterrows()):
+    fig.add_shape(
+        type="rect",
+        xref="paper", yref="y1",
+        x0=0, x1=1,
+        y0=row['min'], y1=row['max'],
+        fillcolor=zone_colors[i % len(zone_colors)],
+        opacity=0.15,
+        layer="below",
+        line_width=0,
+    )
+
+# Layout mit zwei Y-Achsen und Zoom/Interaktivität
+fig.update_layout(
+    title="Herzfrequenz & Leistung",
+    xaxis=dict(title="Zeit (min)"),
+    yaxis=dict(title="Herzfrequenz (bpm)", color='red'),
+    yaxis2=dict(title="Leistung (Watt)", overlaying='y', side='right', color='green'),
+    legend=dict(x=0.01, y=0.99),
+    hovermode='x unified',
+)
+
+# Interaktive Zoomfunktion ist standardmäßig in Plotly enthalten (per Drag & Zoom)
+fig.write_html("figures/heart_rate_power_curve_interactive.html")
+fig.show()
+
+
+
+
+
+# %%
+
+#power_mean = dataframe["PowerOriginal"].mean()
+#power_max = dataframe["PowerOriginal"].max()
+
+# Tabelle mit Mittelwert und Maximalwert der Leistung pro Zone
+def power_stats_per_zone():
+    return dataframe.groupby("Zone")["PowerOriginal"].agg(Mittelwert="mean", Maximalwert="max")
+print(power_stats_per_zone)
 
 
 
