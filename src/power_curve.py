@@ -1,6 +1,9 @@
+
+# %%
 from load_data import load_data
 from sort import bubble_sort
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
 
@@ -25,3 +28,12 @@ if __name__ == "__main__":
     # Save the plot as a PNG file
     fig.savefig("figures/power_curve.png")
 
+    # Create a DataFrame from the power_W array
+    df_Leistungskurve = pd.DataFrame({'Power': power_W})
+    # Sort the DataFrame in descending order by 'Power'
+    df_Leistungskurve = df_Leistungskurve.sort_values(by='Power', ascending=False).reset_index(drop=True)
+    # Calculate the maximum time from the power values
+    max_time = len(df_Leistungskurve) / 60  # Assuming each entry represents one second
+    print(f"Max time in minutes: {max_time}")
+
+# %%
