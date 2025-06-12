@@ -60,4 +60,4 @@ Diese werden durch das Skript `power_curve.py` eingelesen, verarbeitet und als P
 
 ## Leistungskurve II
 Diese Leistungskurve veranschaulicht, über welche maximalen zusammenhängende Zeitspannen hinweg bestimmte Wattleistungen (Threshold) aufrecht erhalten werden konnten.
-![](figures\Leistungskurve_II.png)
+![](figures/Leistungskurve_II.png)
