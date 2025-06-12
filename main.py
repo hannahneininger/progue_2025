@@ -4,6 +4,7 @@ import pandas as pd
 from src.analyze_activity_data import create_table
 from src.analyze_activity_data import power_stats_per_zone
 from src.read_data import get_person_names, get_person_image_by_name
+from src.power_curve import get_Leistungskurve_2
 
 
 
@@ -39,8 +40,5 @@ st.image("figures/heart_rate_power_curve.png", caption="Herzfrequenz-Leistungs-K
 st.write("# Leistung pro Zone")
 st.dataframe(power_stats_per_zone())
 
-
-
-
-
-
+st.write('# Leistungskurve II')
+st.image('figures/Leistungskurve II')
