@@ -1,10 +1,15 @@
 # wenn man etwas verändert muss man in VSC nur STRG s drücken und dann wird es automatisch aktualisiert in Streamlitimport streamlit as st
+import os
+# füge den Pfad zum src-Ordner hinzu, damit die Module importiert werden können
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+
 import streamlit as st
 import pandas as pd
 from src.analyze_activity_data import create_table
 from src.analyze_activity_data import power_stats_per_zone
 from src.read_data import get_person_names, get_person_image_by_name
-from src.power_curve import get_Leistungskurve_2
+
 
 
 
@@ -41,4 +46,4 @@ st.write("# Leistung pro Zone")
 st.dataframe(power_stats_per_zone())
 
 st.write('# Leistungskurve II')
-st.image('figures/Leistungskurve II')
+st.image('figures/Leistungskurve_II.png')

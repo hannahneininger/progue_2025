@@ -57,3 +57,7 @@ Diese werden durch das Skript `power_curve.py` eingelesen, verarbeitet und als P
 ## Anwendung der App
 1. Sicherstellen dass virtuelle Umgebung aktiviert ist `.venv/Scripts/activate´
 2. Abhängigikeiten installieren `streamlit run main.py´
+
+## Leistungskurve II
+Diese Leistungskurve veranschaulicht, über welche maximalen zusammenhängende Zeitspannen hinweg bestimmte Wattleistungen (Threshold) aufrecht erhalten werden konnten.
+![](figures\Leistungskurve_II.png)

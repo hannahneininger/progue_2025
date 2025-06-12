@@ -1,5 +1,11 @@
 
 # %%
+
+import os
+# füge den Pfad zum src-Ordner hinzu, damit die Module importiert werden können
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+
 from load_data import load_data
 from sort import bubble_sort
 import numpy as np
@@ -9,7 +15,7 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     # Load the data from the CSV file
-    data = load_data('../data/activity.csv')
+    data = load_data('data/activity.csv')
     power_W = data['PowerOriginal']
     print(power_W)
     sorted_power_W = bubble_sort(power_W)
@@ -26,7 +32,7 @@ if __name__ == "__main__":
     ax.grid()
     plt.show()
     # Save the plot as a PNG file
-    fig.savefig("../figures/power_curve.png")
+    fig.savefig("figures/power_curve.png")
 
 # %%
 ## VERSUCH 1 von mir
@@ -52,7 +58,7 @@ if __name__ == "__main__":
 
 
 import pandas as pd
-data = load_data('../data/activity.csv')
+data = load_data('data/activity.csv')
 df = pd.DataFrame(data)
 df
 
@@ -131,7 +137,7 @@ for i in range(num_blocks):
               alpha=alpha
        )
 
-plt.savefig("../figures/Leistungskurve II.png")
+plt.savefig("figures/Leistungskurve_II.png")
 plt.show()
 
 # %%

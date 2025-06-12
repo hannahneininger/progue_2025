@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 def load_data(file_path):
 
     # Specify the file path
-    #file_path = 'activity.csv'
+    file_path = 'activity.csv'
 
     # Use numpy.genfromtxt to read the CSV data from the file into a NumPy array
     data_array = np.genfromtxt(file_path, delimiter=',', dtype=None, names=True)
